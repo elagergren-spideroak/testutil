@@ -5,6 +5,7 @@
 package testutil
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -33,6 +34,7 @@ func TestInlining(t *testing.T, pkgPath string, wantInlinable ...string) {
 	if err != nil {
 		t.Fatalf("go build: %v, %s", err, out)
 	}
+	fmt.Println(string(out))
 	got := make(map[string]bool)
 	regexp.MustCompile(` can inline (\S+)`).ReplaceAllFunc(out, func(match []byte) []byte {
 		got[strings.TrimPrefix(string(match), " can inline ")] = true
